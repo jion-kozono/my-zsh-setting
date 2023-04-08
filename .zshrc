@@ -1,3 +1,4 @@
+# あたらしくインストールされたコマンドを即認識させる
 zstyle ":completion:*:commands" rehash 1
 ########################################
 # Options
@@ -27,6 +28,8 @@ if type brew &>/dev/null; then
     autoload -Uz compinit && compinit
     source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     source $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh
+    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 fi
 
 # 環境変数
@@ -65,6 +68,14 @@ precmd() {
     git_prompt
     add_newline
 }
+
+typeset -A ZSH_HIGHLIGHT_STYLES
+# エイリアスコマンドのハイライト
+ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta,bold'
+# 存在するパスのハイライト
+ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
+# グロブ
+ZSH_HIGHLIGHT_STYLES[globbing]='none'
 
 # Volta
 export VOLTA_HOME="$HOME/.volta"
